@@ -11,4 +11,11 @@ class Category extends Model
 
     public $table = 'categories';
     public $guarded = ['id'];
+
+    public function produk(){
+        return $this->hasMany(Produk::class, 'categori_id', 'id');
+    }
+    public function jenis(){
+        return $this->hasMany(Jenis::class, 'kategori_id', 'id');
+    }
 }

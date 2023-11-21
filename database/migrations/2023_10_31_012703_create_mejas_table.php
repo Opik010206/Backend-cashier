@@ -12,14 +12,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('produk', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('kategori_id');
-            $table->string('name');
-            $table->double('price');
-            $table->integer('stock');
-            $table->string('tag');
-            $table->string('image');
+        Schema::create('meja', function (Blueprint $table) {
+            $table->bigIncrements('id'); // Kolom meja_id sebagai primary key
+            $table->string('nomor_meja');
+            $table->integer('kapasitas');
+            $table->string('status'); // Kolom status (misalnya, 'tersedia', 'dipesan', 'terisi')
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
         });
@@ -30,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('produk');
+        Schema::dropIfExists('meja');
     }
 };

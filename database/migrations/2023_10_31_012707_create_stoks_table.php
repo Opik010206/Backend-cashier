@@ -12,16 +12,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('produk', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('kategori_id');
-            $table->string('name');
-            $table->double('price');
-            $table->integer('stock');
-            $table->string('tag');
-            $table->string('image');
+        Schema::create('stok', function (Blueprint $table) {
+            $table->bigIncrements('id'); // Kolom stok_id sebagai primary key
+            $table->unsignedBigInteger('menu_id'); // Kolom menu_id sebagai foreign key ke Tabel Menu
+            $table->integer('jumlah');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+
+            $table->foreign('menu_id')
+                ->references('id')
+                ->on('menu')
+                ->onUpdate('CASCADE')
+                ->onDelete('CASCADE'); // Menghubungkan menu_id dengan menu_id pada tabel Menu
         });
     }
 
@@ -30,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('produk');
+        Schema::dropIfExists('stok');
     }
 };

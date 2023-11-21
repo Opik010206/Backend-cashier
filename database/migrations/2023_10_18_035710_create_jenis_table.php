@@ -12,16 +12,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('produk', function (Blueprint $table) {
+        Schema::create('jenis', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('nama_jenis');
             $table->unsignedBigInteger('kategori_id');
-            $table->string('name');
-            $table->double('price');
-            $table->integer('stock');
-            $table->string('tag');
-            $table->string('image');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+
+            $table->foreign('kategori_id')->references('id')->on('categories')->onUpdate('CASCADE')->onDelete('CASCADE');
         });
     }
 
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('produk');
+        Schema::dropIfExists('jenis');
     }
 };

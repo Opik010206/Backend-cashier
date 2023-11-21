@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CategoryRequest;
-use App\Models\Category;
+use App\Http\Requests\JenisRequest;
+use App\Models\Jenis;
 use Exception;
 use Illuminate\Http\Request;
 use PDOException;
 
-class CategoryController extends Controller
+class JenisController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,8 @@ class CategoryController extends Controller
     public function index()
     {
         try {
-            $data = Category::get();
+            $data = Jenis::with('category')->get();
+            // dd($data);
             return response()->json(['status'=>true, 'message'=>'success', 'data'=>$data]);
         } catch (Exception | PDOException $e) {
             return response()->json(['status'=>false, 'message'=>'success', 'data']);
@@ -37,7 +38,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         try {
-            $data = Category::create($request->all());
+            $data = Jenis::create($request->all());
             return response()->json(['status'=>true, 'message'=>'success', 'data'=>$data]);
         } catch (Exception | PDOException $e) {
             return response()->json(['status'=>false, 'message'=>'warning', 'data gagal ditambahkan']);
@@ -47,10 +48,10 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Category $category)
+    public function show(Jenis $jeni)
     {
         try {
-            return response()->json(['status'=>true, 'message'=>'success', 'data'=>$category]);
+            return response()->json(['status'=>true, 'message'=>'success', 'data'=>$jeni]);
         } catch (Exception | PDOException $e) {
             return response()->json(['status'=>false, 'message'=>'success', 'data gagal ditambahkan', 'error_type'=>$e]);
         }
@@ -59,7 +60,7 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Category $category)
+    public function edit(Jenis $jenis)
     {
         //
     }
@@ -67,10 +68,10 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(CategoryRequest $request, Category $category)
+    public function update(JenisRequest $request, Jenis $jeni)
     {
         try {
-            $category->update($request->all());
+            $jeni->update($request->all());
             // dd($data);
             return response()->json(['status'=>true, 'message'=>'success']);
         } catch (Exception | PDOException $e) {
@@ -81,12 +82,12 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category)
+    public function destroy(Jenis $jeni)
     {
         try {
-            // $data = Category::get();
+            // $data = Jenis::get();
             // dd($data);
-            $data = $category->delete();
+            $data = $jeni->delete();
             return response()->json(['status'=>true, 'message'=>'success', 'data'=>$data]);
         } catch (Exception | PDOException $e) {
             return response()->json(['status'=>false, 'message'=>'success', 'gagal menghapus data']);

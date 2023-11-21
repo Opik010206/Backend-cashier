@@ -16,7 +16,8 @@ class ProdukController extends Controller
     public function index()
     {
         try {
-            $data = Produk::get();
+            $data = Produk::with('category')->get();
+            // dd($data);
             return response()->json(['status'=>true, 'message'=>'success', 'data'=>$data]);
         } catch (Exception | PDOException $e) {
             return response()->json(['status'=>false, 'message'=>'success', 'data']);
